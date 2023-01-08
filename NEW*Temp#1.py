@@ -1,7 +1,8 @@
 # Calista Adler and Brandon Zhao
 
 import pandas as pd
-import csv 
+import csv
+from tqdm import tqdm
 
 # opening and reading data from records.csv file 
 data = pd.read_csv(r'/Users/calistaadler/Downloads/DFR/records.csv')
@@ -11,6 +12,7 @@ output = pd.DataFrame(columns=['Timestamp','ModA Temp', 'ModB Temp', 'ModC Temp'
 
 # id for temperature #1
 temp1_id = '00A0'
+progress_bar = tqdm(range(len(data)))
 
 # iterates through each row in original records file
 for index, row in data.iterrows():
@@ -66,7 +68,7 @@ for index, row in data.iterrows():
 
         # appends items to dataframe
         output.loc[len(output.index)] = [new_row, modA/10, modB/10, modC/10, gate_driver/10]
-
+    progress_bar.update(1)
         
 # stores final data frame in csv file 
 output.to_csv(r'/Users/calistaadler/Downloads/DFR/tempout.csv')
